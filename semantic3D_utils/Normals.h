@@ -223,7 +223,7 @@ public:
 			int n = permutation[per];
 			//getting the list of neighbors
 			const Eigen::Vector3d& pt_query = pts.row(n);
-			std::vector<long int> pointIdxSearch(k_density+1);
+			std::vector<Eigen::Index> pointIdxSearch(k_density+1);
 			std::vector<double> pointSquaredDistance(k_density+1);
 			//knn for k_density+1 because the point is itself include in the search tree
 			tree.index->knnSearch(&pt_query[0], k_density+1, &pointIdxSearch[0], &pointSquaredDistance[0]);
@@ -253,7 +253,7 @@ public:
 			int n = permutation[per];
 
 			//getting the list of neighbors
-			std::vector<long int> pointIdxSearch;
+			std::vector<Eigen::Index> pointIdxSearch;
 			std::vector<double> pointSquaredDistance;
 
 			const Eigen::Vector3d& pt_query = pts.row(n);
@@ -265,7 +265,7 @@ public:
 				if(use_density)
 					list_of_triplets(trip,rotations*n_planes,pointIdxSearch,vecInt);
 			}else{
-				std::vector<std::pair<long int, double> > matches;
+				std::vector<std::pair<Eigen::Index, double> > matches;
 				tree.index->radiusSearch(&pt_query[0], double(neighborhood_size), matches, nanoflann::SearchParams());
 
 				if((int)matches.size() < lower_neighbor_bound_neighbors){
@@ -445,7 +445,7 @@ private:
 	 */
 	inline void list_of_triplets(Eigen::MatrixX3i &triplets,
 		const unsigned int &triplet_number,
-		std::vector<long int> pointIdxSearch,
+		std::vector<Eigen::Index> pointIdxSearch,
 		std::vector<int> &vecRandInt)
 	{
 		std::vector<double> dists;

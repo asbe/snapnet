@@ -335,7 +335,7 @@ void sem3d_estimate_attributes(char* filename, char* destination_filename, float
 	// orientation
 	vector<int> z_orients(v_centers.size(),0);
     #pragma omp parallel for
-	for(size_t pt_id=0; pt_id<z_orients.size(); pt_id++){
+	for(long pt_id=0; pt_id<z_orients.size(); pt_id++){
 
 		Eigen::Vector3f normal(normals(pt_id,0), normals(pt_id,1), normals(pt_id,2));
 		normal.normalize();
@@ -524,7 +524,7 @@ void sem3d_create_mesh(char* filename_rgb,
 	pcl::PCLPointCloud2 pc2;
 	// save_mesh composite
 	#pragma omp parallel for
-	for(size_t pt_id=0; pt_id<cloud_with_normals->size(); pt_id++){
+	for(long pt_id=0; pt_id<cloud_with_normals->size(); pt_id++){
 		cloud_with_normals->points[pt_id].r = rgbs[pt_id][0];
 		cloud_with_normals->points[pt_id].g = rgbs[pt_id][1];
 		cloud_with_normals->points[pt_id].b = rgbs[pt_id][2];
@@ -535,7 +535,7 @@ void sem3d_create_mesh(char* filename_rgb,
 
 	// save_mesh composite
 	#pragma omp parallel for
-	for(size_t pt_id=0; pt_id<cloud_with_normals->size(); pt_id++){
+	for(long pt_id=0; pt_id<cloud_with_normals->size(); pt_id++){
 		cloud_with_normals->points[pt_id].r = composites[pt_id][0];
 		cloud_with_normals->points[pt_id].g = composites[pt_id][1];
 		cloud_with_normals->points[pt_id].b = composites[pt_id][2];
@@ -547,7 +547,7 @@ void sem3d_create_mesh(char* filename_rgb,
 	// save mesh labels
 	if(remove_multi_label_faces){
 		#pragma omp parallel for
-		for(size_t pt_id=0; pt_id<cloud_with_normals->size(); pt_id++){
+		for(long pt_id=0; pt_id<cloud_with_normals->size(); pt_id++){
 
 			Eigen::Vector3i col = label2color(labels[pt_id]);
 			cloud_with_normals->points[pt_id].r = col[0];
