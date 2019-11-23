@@ -1,8 +1,8 @@
 {
-    "train_input_dir":"path_to_directory_TRAIN",
-    "test_input_dir":"path_to_directory_TEST",
-    "train_results_root_dir":"where_to_put_training_products",
-    "test_results_root_dir":"where_to_put_test_products",
+    "train_input_dir":"E:/data_rossum/sight/Semantic3d/data/point-clouds/training1",
+    "test_input_dir":"E:/data_rossum/sight/Semantic3d/data/point-clouds/testing1",
+    "train_results_root_dir":"E:/data_rossum/sight/Semantic3d/data/train",
+    "test_results_root_dir":"E:/data_rossum/sight/Semantic3d/data/test",
     "images_dir":"images",
 
     "training": true,
