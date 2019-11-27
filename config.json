@@ -1,8 +1,8 @@
 {
-    "train_input_dir":"E:/data_rossum/sight/Semantic3d/data/point-clouds/training1",
-    "test_input_dir":"E:/data_rossum/sight/Semantic3d/data/point-clouds/testing1",
-    "train_results_root_dir":"E:/data_rossum/sight/Semantic3d/data/train",
-    "test_results_root_dir":"E:/data_rossum/sight/Semantic3d/data/test",
+    "train_input_dir":"E:/Prosjekter/Project_SIGHT/Semantic3D/data/point-clouds/training1",
+    "test_input_dir":"E:/Prosjekter/Project_SIGHT/Semantic3D/data/point-clouds/testing1",
+    "train_results_root_dir":"E:/Prosjekter/Project_SIGHT/Semantic3D/data/train",
+    "test_results_root_dir":"E:/Prosjekter/Project_SIGHT/Semantic3D/data/test",
     "images_dir":"images",
 
     "training": true,
@@ -10,7 +10,7 @@
     "imsize":224,
     "voxel_size":0.1,
     "cam_number":10,
-    "create_mesh" : true,
+    "create_mesh" : false,
     "create_views" : true,
     "create_images" : true,
 

@@ -1,4 +1,7 @@
 {
     "cmake.configureOnOpen": false,
-    "python.pythonPath": ".venv\\Scripts\\python.exe"
+    "python.pythonPath": ".venv\\Scripts\\python.exe",
+    "files.associations": {
+        "iostream": "cpp"
+    }
 }

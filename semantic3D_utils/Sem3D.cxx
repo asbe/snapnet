@@ -474,6 +474,8 @@ void sem3d_create_mesh(char* filename_rgb,
 
 	cout << "Cloud size " << cloud_with_normals->size() << endl;
 
+	cout << "Label size " << labels.size() << endl;
+
 	pcl::search::KdTree<pcl::PointXYZRGBNormal>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZRGBNormal>);
 	tree->setInputCloud(cloud_with_normals);
 
@@ -497,7 +499,7 @@ void sem3d_create_mesh(char* filename_rgb,
     gp3.setInputCloud (cloud_with_normals);
     gp3.setSearchMethod (tree);
     gp3.reconstruct (triangles);
-
+	cout << "Done greedy triangulation to " << triangles.polygons.size() << " triangles." << endl;
     if(remove_multi_label_faces){
 
 		// create the decimated triangles
@@ -518,6 +520,7 @@ void sem3d_create_mesh(char* filename_rgb,
 		// update triangles
         triangles = triangles_decimated;
 	}
+	cout << "Done removing multilabel faces " << triangles.polygons.size() << " triangles." << endl;
 
 
 	// save mesh
@@ -532,7 +535,7 @@ void sem3d_create_mesh(char* filename_rgb,
 	pcl::toPCLPointCloud2(*cloud_with_normals, pc2);
 	triangles.cloud = pc2;
 	pcl::io::savePolygonFile(filename_mesh_rgb,triangles);
-
+	cout << "Saved mesh_rgb" << endl;
 	// save_mesh composite
 	#pragma omp parallel for
 	for(long pt_id=0; pt_id<cloud_with_normals->size(); pt_id++){
@@ -543,22 +546,33 @@ void sem3d_create_mesh(char* filename_rgb,
 	pcl::toPCLPointCloud2(*cloud_with_normals, pc2);
 	triangles.cloud = pc2;
 	pcl::io::savePolygonFile(filename_mesh_composite,triangles);
+	cout << "Saved mesh_composite" << endl;
 
 	// save mesh labels
 	if(remove_multi_label_faces){
+		cout << "Enter save mesh " << cloud_with_normals->size() << endl;
+		try {
 		#pragma omp parallel for
 		for(long pt_id=0; pt_id<cloud_with_normals->size(); pt_id++){
-
-			Eigen::Vector3i col = label2color(labels[pt_id]);
-			cloud_with_normals->points[pt_id].r = col[0];
-			cloud_with_normals->points[pt_id].g = col[1];
-			cloud_with_normals->points[pt_id].b = col[2];
+			//cout << "Label id " << labels[pt_id] << endl;
+			Eigen::Vector3i labcolor = label2color(labels[pt_id]);
+			//cout << labcolor << endl;
+			cloud_with_normals->points[pt_id].r = labcolor[0];
+			cloud_with_normals->points[pt_id].g = labcolor[1];
+			cloud_with_normals->points[pt_id].b = labcolor[2];
 		}
+		}
+		catch (exception& e){
+			cout << e.what();
+			}
 
+		std::cout << "Done setting colors" <<endl;
 		// update mesh colors
 		pcl::toPCLPointCloud2(*cloud_with_normals, pc2);
 		triangles.cloud = pc2;
+		std::cout << "Prep for saving" <<endl;
 		pcl::io::savePolygonFile(filename_mesh_label,triangles);
+		std::cout << "Saved" <<endl;
 	}
 		
 	ofstream ofs(filename_faces);
