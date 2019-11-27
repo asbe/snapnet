@@ -85,6 +85,7 @@ class Trainer:
         learning_rate,
         variable_scope="s"):
 
+        torch.multiprocessing.freeze_support()
 
         # create model
         net = self.model_function(input_ch, label_nbr)

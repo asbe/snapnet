@@ -24,7 +24,7 @@
             "cwd": "${fileDirname}"
         },
         {
-            "name": "Python: gen images",
+            "name": "Python: call with config.json",
             "type": "python",
             "request": "launch",
             "program": "${file}",
