@@ -2,8 +2,7 @@ import numpy as np
 import os
 import scipy.misc
 from tqdm import *
-
-
+import glob
 
 # load the configuration file and define variables
 print("Loading configuration file")
@@ -15,6 +14,8 @@ help='config file')
 args = parser.parse_args()
 json_data=open(args.config).read()
 config = json.loads(json_data)
+
+#config["training"]=False
 
 if config["training"]:
     input_dir = config["train_input_dir"]
@@ -42,44 +43,8 @@ if not os.path.exists(voxels_directory):
 if not os.path.exists(image_directory):
     os.makedirs(image_directory)
 
-if(config["training"]):
-    # training filenames
-    filenames = [
-         "bildstein_station1_xyz_intensity_rgb",
-         "bildstein_station3_xyz_intensity_rgb",
-         "bildstein_station5_xyz_intensity_rgb",
-         "domfountain_station1_xyz_intensity_rgb",
-         "domfountain_station2_xyz_intensity_rgb",
-         "domfountain_station3_xyz_intensity_rgb",
-        # "neugasse_station1_xyz_intensity_rgb",
-         "sg27_station1_intensity_rgb",
-         "sg27_station2_intensity_rgb",
-         "sg27_station4_intensity_rgb",
-         "sg27_station5_intensity_rgb",
-        "sg27_station9_intensity_rgb",
-        "sg28_station4_intensity_rgb",
-        "untermaederbrunnen_station1_xyz_intensity_rgb",
-        "untermaederbrunnen_station3_xyz_intensity_rgb"
-        ]
-else: # testing filename
-    filenames = [
-            "birdfountain_station1_xyz_intensity_rgb",
-            "castleblatten_station1_intensity_rgb",
-            "castleblatten_station5_xyz_intensity_rgb",
-            "marketplacefeldkirch_station1_intensity_rgb",
-            "marketplacefeldkirch_station4_intensity_rgb",
-            "marketplacefeldkirch_station7_intensity_rgb",
-            "sg27_station10_intensity_rgb",
-            "sg27_station3_intensity_rgb",
-            "sg27_station6_intensity_rgb",
-            "sg27_station8_intensity_rgb",
-            "sg28_station2_intensity_rgb",
-            "sg28_station5_xyz_intensity_rgb",
-            "stgallencathedral_station1_intensity_rgb",
-            "stgallencathedral_station3_intensity_rgb",
-            "stgallencathedral_station6_intensity_rgb"
-        ]
 
+filenames = [os.path.splitext(f)[0] for f in glob.glob(input_dir + "/raw/*.pc", recursive=False)]
 
 if create_mesh:
 
@@ -99,14 +64,14 @@ if create_mesh:
             # semantizer.load_Sem3D_labels(os.path.join(input_dir,filename+".txt"),
             #     os.path.join(input_dir,filename+".labels"))
 
-            Sem3D.semantic3d_load_from_txt_voxel_labels(os.path.join(input_dir,filename+".txt"),
+            Sem3D.semantic3d_load_from_txt_voxel_labels(os.path.join(input_dir,filename+".pc"),
                                                 os.path.join(input_dir,filename+".labels"),
                                                 os.path.join(voxels_directory, filename+"_voxels.txt"),
                                                 voxel_size
                                                 )
         else:
             # semantizer.load_Sem3D(os.path.join(input_dir,filename+".txt"))
-            Sem3D.semantic3d_load_from_txt_voxel(os.path.join(input_dir,filename+".txt"),
+            Sem3D.semantic3d_load_from_txt_voxel(os.path.join(input_dir,filename+".pc"),
                                                 os.path.join(voxels_directory, filename+"_voxels.txt"),
                                                 voxel_size
                                                 )

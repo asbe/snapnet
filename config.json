@@ -1,11 +1,11 @@
 {
-    "train_input_dir":"E:/Prosjekter/Project_SIGHT/Semantic3D/data/point-clouds/training1",
-    "test_input_dir":"E:/Prosjekter/Project_SIGHT/Semantic3D/data/point-clouds/testing1",
-    "train_results_root_dir":"E:/Prosjekter/Project_SIGHT/Semantic3D/data/train",
-    "test_results_root_dir":"E:/Prosjekter/Project_SIGHT/Semantic3D/data/test",
+    "train_input_dir":"E:/Prosjekter/Project_SIGHT/data/snapnet",
+    "test_input_dir":"E:/Prosjekter/Project_SIGHT/data/snapnet",
+    "train_results_root_dir":"E:/Prosjekter/Project_SIGHT/data/snapnet/train",
+    "test_results_root_dir":"E:/Prosjekter/Project_SIGHT/data/snapnet/test",
     "images_dir":"images",
 
-    "training": true,
+    "training": false,
 
     "imsize":224,
     "voxel_size":0.1,
